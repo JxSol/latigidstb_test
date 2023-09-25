@@ -17,6 +17,8 @@ class CreateRobotView(CreateView):
 
     Методы:
         - POST
+    Тело запроса:
+        JSON
     """
     model = Robot
     fields = (
