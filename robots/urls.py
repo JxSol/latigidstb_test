@@ -8,4 +8,10 @@ urlpatterns = [
         views.CreateRobotView.as_view(),
         name='create',
     ),
+    path(
+        'report/week/last',
+        views.ProductionWeekReport.as_view(),
+        name='create',
+    ),
+
 ]
