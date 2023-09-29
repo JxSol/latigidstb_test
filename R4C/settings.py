@@ -15,6 +15,9 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Absolute filesystem path to the directory with applications:
+APPS_DIR = BASE_DIR / 'applications'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -24,7 +27,7 @@ SECRET_KEY = 'mztx@x_-=gfhc9xs@bm58m&@3pc7##opo14zob!(l2tus05+jo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -111,10 +114,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
+# --------------------------- STATIC CONFIGURATION ----------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
+# https://docs.djangoproject.com/en/dev/ref/settings/#staticfiles-dirs
+STATICFILES_DIRS = [os.path.join(APPS_DIR, 'static')]
+# -----------------------------------------------------------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -132,3 +139,14 @@ if os.getenv('EMAIL_HOST'):
     EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
     DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 # -----------------------------------------------------------------------------
+
+
+# ------------------------- CSRF CONFIGURATION --------------------------------
+CSRF_TRUSTED_ORIGINS = []
+if csrf_domain := os.getenv('HOST_DOMAIN'):
+    CSRF_TRUSTED_ORIGINS += [f'http://*.{csrf_domain}',
+                             f'https://*.{csrf_domain}']
+# -----------------------------------------------------------------------------
+
+
+

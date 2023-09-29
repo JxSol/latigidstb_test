@@ -1,0 +1,38 @@
+# docker compose up -d
+version: "3.9"
+services:
+  backend:
+    container_name: btsdigital_django
+    build:
+      context: ./backend
+    env_file: .env
+    volumes:
+      - btsdigital_volume_db:app/db.sqlite3
+      - btsdigital_volume_static:/app/staticfiles
+      - btsdigital_volume_media:/app/media
+    networks:
+      - nginx_proxy_manager
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+
+  nginx:
+    container_name: btsdigital_nginx
+    image: nginx:latest
+    restart: unless-stopped
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - btsdigital_volume_static:/data/static
+      - btsdigital_volume_media:/data/media
+    networks:
+      - nginx_proxy_manager
+
+volumes:
+  btsdigital_volume_static:
+  btsdigital_volume_media:
+  btsdigital_volume_db:
+
+networks:
+  nginx_proxy_manager:
+    external: true
