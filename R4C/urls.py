@@ -22,4 +22,8 @@ urlpatterns = [
         'robots/',
         include(('robots.urls', 'robots'), namespace='robots'),
     ),
+    path(
+        'orders/',
+        include(('orders.urls', 'orders'), namespace='orders'),
+    ),
 ]
