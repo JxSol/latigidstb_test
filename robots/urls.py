@@ -11,7 +11,7 @@ urlpatterns = [
     path(
         'report/week/last',
         views.ProductionWeekReport.as_view(),
-        name='create',
+        name='week_report',
     ),
 
 ]
